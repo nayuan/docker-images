@@ -1,2 +1,2 @@
-FROM gitlab/gitlab-ce:8.13.3
+FROM gitlab/gitlab-ce:11.3.0-ce.0
 MAINTAINER nayuan <nayuan@vip.qq.com>
