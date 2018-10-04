@@ -1,2 +1,2 @@
-FROM jenkins:2.60.3
+FROM jenkins/jenkins:latest
 MAINTAINER nayuan <nayuan@vip.qq.com>
