@@ -1,4 +1,3 @@
-FROM node:10.15.0-alpine
 FROM jenkins/jenkins:latest
 MAINTAINER nayuan <nayuan@vip.qq.com>
 
