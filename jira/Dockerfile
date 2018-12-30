@@ -8,4 +8,3 @@ COPY 3.2/*.jar /opt/atlassian/jira/atlassian-jira/WEB-INF/lib/
 USER daemon:daemon
 
 ENV TZ=Asia/Shanghai
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
