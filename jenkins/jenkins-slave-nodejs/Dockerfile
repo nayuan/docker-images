@@ -8,5 +8,3 @@ RUN mkdir /var/run/sshd && adduser --quiet jenkins && echo "jenkins:jenkins" | c
 ENV CI=true
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
-
-USER jenkins
