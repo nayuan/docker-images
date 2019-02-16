@@ -1,0 +1,1 @@
+FROM h1kkan/jenkins-docker:2.150.1
