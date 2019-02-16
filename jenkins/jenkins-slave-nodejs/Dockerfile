@@ -6,7 +6,7 @@ RUN apt-get update \
     && apt-get -y upgrade \
     && apt-get install -y git openssh-server \
     && apt-get -t jessie-backports install -y openjdk-8-jdk \
-    && apt-get install docker
+    && curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
 RUN mkdir /var/run/sshd && adduser --quiet jenkins && echo "jenkins:jenkins" | chpasswd \
     && groupadd docker && gpasswd -a jenkins docker
 
