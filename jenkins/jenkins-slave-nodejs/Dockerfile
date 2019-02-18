@@ -4,7 +4,7 @@ MAINTAINER nayuan<nayuan@vip.qq.com>
 ENV PATH /root/bin:$PATH
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 6.2.2
+ENV NODE_VERSION 9.9.0
 
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
   && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
