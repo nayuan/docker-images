@@ -37,5 +37,6 @@ RUN curl -fL -o docker.tgz "https://download.docker.com/linux/static/${DOCKER_CH
 	&& chmod +x /usr/local/bin/docker
 
 ADD node-v9.9.0-linux-x64.tar.xz /root
+USER jenkins
 
 CMD ["/usr/sbin/sshd", "-D"]
