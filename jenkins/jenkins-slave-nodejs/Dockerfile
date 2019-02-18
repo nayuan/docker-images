@@ -1,4 +1,4 @@
-FROM registry.cn-shenzhen.aliyuncs.com/longmao-third-tools/jenkins-slave-dind:1.0.0
+FROM registry.cn-shenzhen.aliyuncs.com/longmao-third-tools/jenkins-slave-dind:1.0.1
 MAINTAINER nayuan<nayuan@vip.qq.com>
 
 ENV PATH /root/bin:$PATH
