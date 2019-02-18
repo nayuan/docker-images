@@ -1,18 +1,22 @@
-FROM node:alpine
+FROM node:9.0
 
-ENV JAVA_VERSION 8u191
-ENV JAVA_ALPINE_VERSION 8.191.12-r0
+# Add backports
+RUN echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/sources.list
 
-RUN apk add --no-cache git subversion mercurial wget curl unzip openssh ca-certificates procps bash openjdk8-jre="$JAVA_ALPINE_VERSION" docker && \
-    rm -rf /var/cache/apk/*
+# Upgrade and Install packages
+RUN apt-get update \
+    && apt-get -y upgrade \
+    && apt-get install -y git openssh-server \
+    && apt-get -t jessie-backports install -y openjdk-8-jdk \
+    && apt-get install -y docker-ce
 
-ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk/jre
-ENV PATH $JAVA_HOME/bin:$JAVA_HOME/lib:$PATH
+# Prepare container for ssh
+RUN mkdir /var/run/sshd && adduser --quiet jenkins && echo "jenkins:jenkins" | chpasswd
 
-RUN addgroup -S -g 10000 jenkins && \
-    adduser -S -u 10000 -h /home/jenkins -G jenkins jenkins
+ENV CI=true
+EXPOSE 22
 
 USER jenkins
 WORKDIR /home/jenkins
 
-CMD ["/bin/sh"]
+CMD ["/usr/sbin/sshd", "-D"]
