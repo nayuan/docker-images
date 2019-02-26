@@ -9,13 +9,11 @@ RUN apt-get update \
     && apt-get install -y git openssh-server \
     && apt-get -t jessie-backports install -y openjdk-8-jdk
 
-RUN mkdir /var/run/sshd && adduser --quiet jenkins && echo "jenkins:jenkins" | chpasswd
+RUN mkdir /var/run/sshd && adduser --quiet jenkins && echo "jenkins:jenkins" | chpasswd && groupadd docker && gpasswd -a jenkins docker
 
 USER jenkins
 
 ENV CI=true
 EXPOSE 22
-
-WORKDIR /home/jenkins
 
 CMD ["/usr/sbin/sshd", "-D"]
