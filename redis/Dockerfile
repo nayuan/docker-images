@@ -1,2 +1,2 @@
-FROM redis:5.0.3
+FROM redis:latest
 RUN echo 'Asia/Shanghai' >/etc/timezone
