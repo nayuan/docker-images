@@ -1,4 +1,4 @@
-FROM php:5.6-apache
+FROM php:7.4.4-apache
 MAINTAINER nayuan <nayuan@vip.qq.com>
 
 RUN docker-php-ext-install pdo_mysql && \
