@@ -1,54 +1,26 @@
-#
-# Licensed to the Apache Software Foundation (ASF) under one or more
-# contributor license agreements.  See the NOTICE file distributed with
-# this work for additional information regarding copyright ownership.
-# The ASF licenses this file to You under the Apache License, Version 2.0
-# (the "License"); you may not use this file except in compliance with
-# the License.  You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
 
 FROM openjdk:8-alpine
 
 RUN apk add --no-cache bash gettext nmap-ncat openssl busybox-extras
 
-ARG user=rocketmq
-ARG group=rocketmq
-ARG uid=3000
-ARG gid=3000
-
-# RocketMQ is run with user `rocketmq`, uid = 3000
-# If you bind mount a volume from the host or a data container,
-# ensure you use the same uid
-RUN addgroup --gid ${gid} ${group} \
-    && adduser --uid ${uid} -G ${group} ${user} -s /bin/bash -D
-
-ARG version=4.7.0
+RUN addgroup --gid 3000 rocketmq \
+    && adduser --uid 3000 -G rocketmq rocketmq -s /bin/bash -D
 
 # Rocketmq version
-ENV ROCKETMQ_VERSION ${version}
+ENV ROCKETMQ_VERSION 4.7.0
 
 # Rocketmq home
-ENV ROCKETMQ_HOME  /home/rocketmq/rocketmq-${ROCKETMQ_VERSION}
+ENV ROCKETMQ_HOME  /home/rocketmq/rocketmq-4.7.0
 
 WORKDIR  ${ROCKETMQ_HOME}
 
 # Install
 RUN set -eux; \
     apk add --virtual .build-deps curl gnupg unzip; \
-    curl https://archive.apache.org/dist/rocketmq/${ROCKETMQ_VERSION}/rocketmq-all-${ROCKETMQ_VERSION}-bin-release.zip -o rocketmq.zip; \
-    curl https://archive.apache.org/dist/rocketmq/${ROCKETMQ_VERSION}/rocketmq-all-${ROCKETMQ_VERSION}-bin-release.zip.asc -o rocketmq.zip.asc; \
-    #https://www.apache.org/dist/rocketmq/KEYS
-	curl https://www.apache.org/dist/rocketmq/KEYS -o KEYS; \
-	\
-	gpg --import KEYS; \
+    curl https://archive.apache.org/dist/rocketmq/4.7.0/rocketmq-all-4.7.0-bin-release.zip -o rocketmq.zip; \
+    curl https://archive.apache.org/dist/rocketmq/4.7.0/rocketmq-all-4.7.0-bin-release.zip.asc -o rocketmq.zip.asc; \
+    curl https://www.apache.org/dist/rocketmq/KEYS -o KEYS; \
+    gpg --import KEYS; \
     gpg --batch --verify rocketmq.zip.asc rocketmq.zip; \
     unzip rocketmq.zip; \
 	mv rocketmq-all*/* . ; \
@@ -61,7 +33,7 @@ RUN set -eux; \
 # Copy customized scripts
 COPY scripts/ ${ROCKETMQ_HOME}/bin/
 
-RUN chown -R ${uid}:${gid} ${ROCKETMQ_HOME}
+RUN chown -R 3000:3000 ${ROCKETMQ_HOME}
 
 # Expose namesrv port
 EXPOSE 9876
@@ -85,6 +57,6 @@ RUN export JAVA_OPT=" -Duser.home=/opt"
 # Add ${JAVA_HOME}/lib/ext as java.ext.dirs
 RUN sed -i 's/${JAVA_HOME}\/jre\/lib\/ext/${JAVA_HOME}\/jre\/lib\/ext:${JAVA_HOME}\/lib\/ext/' ${ROCKETMQ_HOME}/bin/tools.sh
 
-USER ${user}
+USER rocketmq
 
 WORKDIR ${ROCKETMQ_HOME}/bin
