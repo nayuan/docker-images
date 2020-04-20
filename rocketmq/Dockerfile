@@ -29,7 +29,7 @@ RUN set -eux; \
 # Copy customized scripts
 COPY scripts/ ${ROCKETMQ_HOME}/bin/
 
-RUN chown -R 3000:3000 ${ROCKETMQ_HOME}
+RUN chown -R 3000:3000 ${ROCKETMQ_HOME} && chown -R 3000:3000 /home/rocketmq
 
 # Expose namesrv port
 EXPOSE 9876
