@@ -10,7 +10,7 @@ RUN addgroup --gid 3000 rocketmq \
 ENV ROCKETMQ_VERSION 4.7.0
 
 # Rocketmq home
-ENV ROCKETMQ_HOME  /home/rocketmq/rocketmq-4.7.0
+ENV ROCKETMQ_HOME  /opt/rocketmq
 
 WORKDIR  ${ROCKETMQ_HOME}
 
@@ -49,6 +49,7 @@ RUN mv ${ROCKETMQ_HOME}/bin/runbroker-customize.sh ${ROCKETMQ_HOME}/bin/runbroke
 
 # Export Java options
 RUN export JAVA_OPT=" -Duser.home=/opt"
+RUN echo 'Asia/Shanghai' >/etc/timezone
 
 # Add ${JAVA_HOME}/lib/ext as java.ext.dirs
 RUN sed -i 's/${JAVA_HOME}\/jre\/lib\/ext/${JAVA_HOME}\/jre\/lib\/ext:${JAVA_HOME}\/lib\/ext/' ${ROCKETMQ_HOME}/bin/tools.sh
