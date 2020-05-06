@@ -1,2 +1,2 @@
-FROM mysql:7
+FROM mysql:5.7
 RUN echo 'Asia/Shanghai' >/etc/timezone
