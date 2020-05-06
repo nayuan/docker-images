@@ -1,4 +1,4 @@
-FROM php:7.4.4-apache
+FROM php:5.3.14-apache
 MAINTAINER nayuan <nayuan@vip.qq.com>
 
 RUN apt-get update && apt-get install -y \
