@@ -1,6 +1,2 @@
 FROM openjdk:8
-
-RUN set -eux; \
-        apt-get update; \
-        apt-get install -y python-dev; \
-        pip install -y oss2;
+FROM python:3.9
