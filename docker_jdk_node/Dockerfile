@@ -13,7 +13,8 @@ RUN set -eux; \
 		--strip-components 1 \
 		--no-same-owner; \
 	rm openjdk.tgz*
-  
+
+ENV NODE_VERSION 17.9.0
 RUN addgroup -g 1000 node \
     && adduser -u 1000 -G node -s /bin/sh -D node \
     && apk add --no-cache \
