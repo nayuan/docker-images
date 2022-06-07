@@ -54,6 +54,6 @@ RUN echo 'Asia/Shanghai' >/etc/timezone
 # Add ${JAVA_HOME}/lib/ext as java.ext.dirs
 RUN sed -i 's/${JAVA_HOME}\/jre\/lib\/ext/${JAVA_HOME}\/jre\/lib\/ext:${JAVA_HOME}\/lib\/ext/' ${ROCKETMQ_HOME}/bin/tools.sh
 
-USER rocketmq
+USER root
 
 WORKDIR ${ROCKETMQ_HOME}/bin
