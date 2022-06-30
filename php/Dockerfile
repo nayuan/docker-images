@@ -1,4 +1,4 @@
-FROM php:5.3.29-apache
+FROM php:7.2.34-apache
 MAINTAINER nayuan <nayuan@vip.qq.com>
 
 
