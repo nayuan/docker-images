@@ -1,4 +1,4 @@
-FROM node:10.16.0
+FROM node:14
 
 ENV JAVA_HOME /usr/local/openjdk-8
 RUN { echo '#/bin/sh'; echo 'echo "$JAVA_HOME"'; } > /usr/local/bin/docker-java-home && chmod +x /usr/local/bin/docker-java-home && [ "$JAVA_HOME" = "$(docker-java-home)" ] # backwards compatibility
