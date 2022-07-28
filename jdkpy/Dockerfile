@@ -1,4 +1,4 @@
-FROM fnndsc/conda:python3.10.5
+FROM python:3.8
 
 ENV JAVA_HOME /usr/local/openjdk-8
 RUN { echo '#/bin/sh'; echo 'echo "$JAVA_HOME"'; } > /usr/local/bin/docker-java-home && chmod +x /usr/local/bin/docker-java-home && [ "$JAVA_HOME" = "$(docker-java-home)" ] # backwards compatibility
