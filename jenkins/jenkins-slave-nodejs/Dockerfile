@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:14
 
 # Add backports
 # RUN echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/sources.list
