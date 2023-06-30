@@ -1,3 +1,3 @@
-FROM openjdk:8
+FROM openjdk:11
 
 RUN wget https://arthas.aliyun.com/download/latest_version?mirror=aliyun -O arthas.zip && unzip arthas.zip -d /arthas
