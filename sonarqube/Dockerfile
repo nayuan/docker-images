@@ -1,1 +1,1 @@
-FROM sonarqube:8.9.10-community
+FROM sonarqube:10.1.0-community
