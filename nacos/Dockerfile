@@ -1,0 +1,1 @@
+FROM nacos/nacos-server:v2.3.0
