@@ -8,6 +8,7 @@ RUN apt-get update && \
         wget \
         curl \
         git \
+        docker.io \
         openjdk-17-jdk && \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
     apt-get clean && \
