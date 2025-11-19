@@ -17,7 +17,7 @@ RUN apt-get update && \
         build-essential && \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
     ln -sf /usr/bin/python3 /usr/bin/python && \
-    ln -sf /usr/bin/pip3 /usr/bin/pip
+    ln -sf /usr/bin/pip3 /usr/bin/pip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
