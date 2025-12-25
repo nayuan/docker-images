@@ -49,7 +49,13 @@ RUN echo 'export NVM_DIR="/root/.nvm"' >> /root/.bashrc && \
     echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /root/.bashrc && \
     echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /root/.bashrc && \
     echo 'eval "$(pyenv init --path)"' >> /root/.bashrc && \
-    echo 'eval "$(pyenv init -)"' >> /root/.bashrc
+    echo 'eval "$(pyenv init -)"' >> /root/.bashrc && \
+    pyenv install --skip-existing 3.12.8 && \
+    pyenv global 3.12.8 && \
+    pyenv virtualenv 3.12.8 cssc && \
+    pip install opencv-python && \
+    pip install mediapipe==0.10.21 && \
+    pip install python-ffmpeg
 
 WORKDIR /app
 
