@@ -29,36 +29,38 @@ RUN apt-get update && \
         python3-pip && \
     # 安装 nvm
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
-    # 安装 pyenv
-    curl https://pyenv.run | bash && \
-    # 创建符号链接（保持与你原有逻辑一致）
+    # 创建符号链接
     ln -sf /usr/bin/python3 /usr/bin/python && \
     ln -sf /usr/bin/pip3 /usr/bin/pip && \
     # 清理缓存
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# 设置环境变量以启用 nvm 和 pyenv
-ENV NVM_DIR=/root/.nvm
-ENV PYENV_ROOT=/root/.pyenv
-ENV PATH=$PYENV_ROOT/bin:$NVM_DIR/versions/node/v*/bin:$PATH
+# 安装 Miniconda
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh && \
+    bash miniconda.sh -b -p /opt/conda && \
+    rm miniconda.sh
 
-# 加载 nvm 和 pyenv 到 shell 环境中
+# 设置环境变量
+ENV PATH="/opt/conda/bin:$PATH"
+ENV NVM_DIR=/root/.nvm
+
+# 配置 shell 环境
 RUN echo 'export NVM_DIR="/root/.nvm"' >> /root/.bashrc && \
     echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> /root/.bashrc && \
-    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /root/.bashrc && \
-    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /root/.bashrc && \
-    echo 'eval "$(pyenv init --path)"' >> /root/.bashrc && \
-    echo 'eval "$(pyenv init -)"' >> /root/.bashrc && \
-    pyenv install --skip-existing 3.12.8 && \
-    pyenv global 3.12.8 && \
-    pyenv virtualenv 3.12.8 cssc && \
-    pyenv activate cssc && \
-    python --version && \
-    pip install opencv-python && \
-    pip install mediapipe==0.10.21 && \
-    pip install python-ffmpeg
+    echo 'export PATH="/opt/conda/bin:$PATH"' >> /root/.bashrc
+
+# 创建并配置 Conda 环境
+RUN conda init bash && \
+    conda create -n cssc python=3.12 -y && \
+    echo "conda activate cssc" >> /root/.bashrc
+
+# 激活环境并安装 Python 包
+RUN /bin/bash -c "source /opt/conda/bin/activate && \
+    conda activate cssc && \
+    pip install opencv-python mediapipe==0.10.21 python-ffmpeg"
 
 WORKDIR /app
 
-CMD ["/bin/bash", "-l"]
+# 设置默认启动命令（激活 conda 环境）
+CMD ["/bin/bash", "-c", "source /opt/conda/bin/activate cssc && /bin/bash"]
