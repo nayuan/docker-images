@@ -54,7 +54,7 @@ RUN echo 'export NVM_DIR="/root/.nvm"' >> /root/.bashrc && \
     pyenv global 3.12.8 && \
     pyenv virtualenv 3.12.8 cssc && \
     pyenv activate cssc && \
-    python --version
+    python --version && \
     pip install opencv-python && \
     pip install mediapipe==0.10.21 && \
     pip install python-ffmpeg
